@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_social_app/content_page.dart';
+import 'package:flutter_social_app/routes/route_names.dart';
+import 'package:flutter_social_app/views/content_page.dart';
 import 'package:get/get.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -77,7 +78,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                       ),
-                      onPressed: () => Container(),
+                      onPressed: () {
+                        Get.toNamed(RouteNames.getContentPage());
+                        // Get.toName("/content_page");
+                        // Get.to(() => ContentPage());
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => ContentPage()),
+                        // );
+                      },
                       child: Text(
                         "Get started",
                         style: TextStyle(color: Colors.white),
