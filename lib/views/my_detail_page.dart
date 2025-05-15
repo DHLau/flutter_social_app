@@ -1,24 +1,26 @@
 import 'dart:convert';
+import 'package:flutter_social_app/controllers/data_controller.dart';
+import 'package:flutter_social_app/models/detail_data_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'content_page.dart';
 import 'my_home_page.dart';
 
-class DetailPage extends StatefulWidget {
+// GetView<DataController> 这样能够自动找到控制器
+class DetailPage extends GetView<DataController> {
   const DetailPage({Key? key}) : super(key: key);
 
-  @override
-  _DetailPageState createState() => _DetailPageState();
-}
-
-class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
+    // 找到控制器
+    // final DataController _controller = Get.find<DataController>();
+    final DetailDataModel detailData = Get.arguments as DetailDataModel;
+
     int _currentIndex = 0;
     return Scaffold(
       body: Container(
@@ -53,7 +55,7 @@ class _DetailPageState extends State<DetailPage> {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage("img/background.jpg"),
+                        backgroundImage: AssetImage("${detailData.img}"),
                       ),
                       SizedBox(
                         width: 10,
@@ -63,7 +65,7 @@ class _DetailPageState extends State<DetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "name",
+                            "${detailData.name}",
                             style: TextStyle(
                                 color: Color(0xFF3b3f42),
                                 fontSize: 18,
@@ -271,13 +273,13 @@ class _DetailPageState extends State<DetailPage> {
                               color: Colors.black),
                           children: [
                         TextSpan(
-                            text: "(11)",
+                            text: "${controller.dataList.length}",
                             style: TextStyle(color: Color(0xFFfbc33e)))
                       ])),
                 )),
             //images
             Stack(children: [
-              for (int i = 0; i < 5; i++)
+              for (int i = 0; i < controller.dataList.length; i++)
                 Positioned(
                   top: 590,
                   left: (20 + i * 35).toDouble(),
@@ -287,7 +289,7 @@ class _DetailPageState extends State<DetailPage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         image: DecorationImage(
-                            image: AssetImage("img/background.jpg"),
+                            image: AssetImage("${controller.dataList[i].img}"),
                             fit: BoxFit.cover)),
                   ),
                 )
