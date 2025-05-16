@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_social_app/controllers/fav_controller.dart';
 import 'package:flutter_social_app/routes/route_names.dart';
 import 'package:get/get.dart';
 
 void main() {
+  Get.put(FavController());
   runApp(MyApp());
 }
 

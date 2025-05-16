@@ -88,8 +88,10 @@ class ContentPage extends StatelessWidget {
         itemBuilder: (_, i) {
           return GestureDetector(
             onTap: () {
-              Get.toNamed(RouteNames.getDetailPage(),
-                  arguments: _controller.dataList[0]);
+              print("$i");
+              Get.toNamed(RouteNames.getDetailPage(i));
+              // Get.toNamed(RouteNames.getDetailPage(i),
+              //     arguments: _controller.dataList[0]);
               // Get.to(() => DetailPage());
             },
             child: Container(

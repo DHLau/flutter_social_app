@@ -10,7 +10,9 @@ class RouteNames {
   static const String contentPage = "/content_page";
 
   static String getInitial() => initial;
-  static String getDetailPage() => detailPage;
+  // passing the as query params
+  // 如果使用网络请求, 直接使用通过ID获取数据
+  static String getDetailPage(int id) => "$detailPage?id=$id";
   static String getContentPage() => contentPage;
 
   static List<GetPage> routes = [

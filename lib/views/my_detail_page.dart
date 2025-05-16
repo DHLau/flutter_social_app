@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_social_app/controllers/data_controller.dart';
+import 'package:flutter_social_app/controllers/fav_controller.dart';
 import 'package:flutter_social_app/models/detail_data_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +11,8 @@ import 'my_home_page.dart';
 
 // GetView<DataController> 这样能够自动找到控制器
 class DetailPage extends GetView<DataController> {
-  const DetailPage({Key? key}) : super(key: key);
+  DetailPage({Key? key}) : super(key: key);
+  final favController = Get.find<FavController>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,15 @@ class DetailPage extends GetView<DataController> {
 
     // 找到控制器
     // final DataController _controller = Get.find<DataController>();
-    final DetailDataModel detailData = Get.arguments as DetailDataModel;
+    // PlanA 直接传递模型
+    // final DetailDataModel detailData = Get.arguments as DetailDataModel;
+    // PlanB 直接传递ID
+    final String id = Get.parameters['id'] ?? "0";
+    DetailDataModel detailData = controller.dataList[int.parse(id)];
 
     int _currentIndex = 0;
+    // 不是全局更新, 而是局部更新
+    print("hello there");
     return Scaffold(
       body: Container(
         color: Color(0xFFc5e5f3),
@@ -300,14 +308,20 @@ class DetailPage extends GetView<DataController> {
                 left: 25,
                 child: Row(
                   children: [
-                    Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color(0xFFfbc33e)),
-                        child:
-                            Icon(Icons.favorite_border, color: Colors.white)),
+                    GestureDetector(onTap: () {
+                      favController.fav = !favController.fav;
+                    }, child: Obx(() {
+                      return Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color(0xFFfbc33e)),
+                          child: Icon(Icons.favorite,
+                              color: favController.fav == false
+                                  ? Colors.white
+                                  : Colors.red));
+                    })),
                     SizedBox(
                       width: 10,
                     ),
